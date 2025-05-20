@@ -1,0 +1,39 @@
+[project]
+name = 'Decentralized-Manufacturing-Equipment-Sharing'
+description = ''
+authors = []
+telemetry = true
+cache_dir = './.cache'
+requirements = []
+[contracts.assetment]
+path = 'contracts/assetment.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.owner-verification]
+path = 'contracts/owner-verification.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.payment-settlement]
+path = 'contracts/payment-settlement.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.reservation]
+path = 'contracts/reservation.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.usuage-tracking]
+path = 'contracts/usuage-tracking.clar'
+clarity_version = 2
+epoch = 2.5
+[repl.analysis]
+passes = ['check_checker']
+
+[repl.analysis.check_checker]
+strict = false
+trusted_sender = false
+trusted_caller = false
+callee_filter = false

@@ -5,3 +5,5 @@ H
 contracts/assetment.clar,4/4/4475eea5d05f55b2596aaf8f5ca80d10ab9a8a07
 Q
 !contracts/owner-verification.clar,8/b/8b7a428758d2a9beb9fc7fe2f1095c83dd5a04ea
+Q
+!contracts/payment-settlement.clar,3/9/39c02fc1b8939106a5400ca0bbdd70a2c26d6bf6

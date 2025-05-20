@@ -1,30 +1,45 @@
+;; Owner Verification Contract
+;; Validates equipment holders
 
-;; title: owner-verification
-;; version:
-;; summary:
-;; description:
+(define-data-var contract-owner principal tx-sender)
 
-;; traits
-;;
+;; Map to store verified owners
+(define-map verified-owners principal bool)
 
-;; token definitions
-;;
+;; Error codes
+(define-constant ERR-NOT-AUTHORIZED u100)
+(define-constant ERR-ALREADY-VERIFIED u101)
+(define-constant ERR-NOT-VERIFIED u102)
 
-;; constants
-;;
+;; Initialize contract owner
+(define-public (initialize-contract)
+  (begin
+    (asserts! (is-eq tx-sender (var-get contract-owner)) (err ERR-NOT-AUTHORIZED))
+    (ok true)))
 
-;; data vars
-;;
+;; Add a verified owner
+(define-public (add-verified-owner (owner principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get contract-owner)) (err ERR-NOT-AUTHORIZED))
+    (asserts! (is-none (map-get? verified-owners owner)) (err ERR-ALREADY-VERIFIED))
+    (map-set verified-owners owner true)
+    (ok true)))
 
-;; data maps
-;;
+;; Remove a verified owner
+(define-public (remove-verified-owner (owner principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get contract-owner)) (err ERR-NOT-AUTHORIZED))
+    (asserts! (is-some (map-get? verified-owners owner)) (err ERR-NOT-VERIFIED))
+    (map-delete verified-owners owner)
+    (ok true)))
 
-;; public functions
-;;
+;; Check if an owner is verified
+(define-read-only (is-verified-owner (owner principal))
+  (default-to false (map-get? verified-owners owner)))
 
-;; read only functions
-;;
-
-;; private functions
-;;
-
+;; Transfer contract ownership
+(define-public (transfer-ownership (new-owner principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get contract-owner)) (err ERR-NOT-AUTHORIZED))
+    (var-set contract-owner new-owner)
+    (ok true)))
